@@ -86,7 +86,7 @@ namespace labirint
             int t;
             do { t = OddBetween(0, width); } while (t == 0 || t == width);
             _lab[0, t] = '/';
-            EntranceDoor = new Point(t, 0);
+            ExitDoor = new Point(t, 0);
 
             do { t = OddBetween(0, width); } while (t == 0 || t == width);
             _lab[height - 1, t] = '/';

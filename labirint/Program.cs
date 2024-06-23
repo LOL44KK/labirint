@@ -12,7 +12,7 @@ namespace labirint
         {
             Console.CursorVisible = false;
             Console.SetWindowSize(120, 30);
-            Point shiftDraw = new Point(20, 0);
+            Point shiftMapDraw = new Point(20, 0);
 
             while (true)
             {
@@ -23,14 +23,12 @@ namespace labirint
                 Player player = new Player(labyrinth, labyrinth.EntranceDoor);
                 EnemyManager enemyManager = new EnemyManager(labyrinth, player, 2, 2, 2);
                 PlayerMovement playerMovement = new PlayerMovement(player, labyrinth);
-                PlayerAttacks playerAttacks = new PlayerAttacks(player, enemyManager, labyrinth, shiftDraw);
+                PlayerAttacks playerAttacks = new PlayerAttacks(player, enemyManager, labyrinth, shiftMapDraw);
                 Input input = new Input();
                 input.AddInput(playerMovement.Movement);
                 input.AddInput(playerAttacks.Attacks);
 
                 long lastMoveEnemy = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-
-
 
                 labyrinth.Draw(20, 0);
 
@@ -71,11 +69,11 @@ namespace labirint
                         enemyManager.Move();
                     }
 
-                    Enemy enemy = enemyManager.CheckCollisionEnemies(shiftDraw);
+                    Enemy enemy = enemyManager.CheckCollisionEnemies(shiftMapDraw);
                     if (enemy != null)
                     {
                         player.Hit(enemy.OnHitHealth);
-                        Console.SetCursorPosition(enemy.Coordinates.X + shiftDraw.X, enemy.Coordinates.Y + shiftDraw.Y);
+                        Console.SetCursorPosition(enemy.Coordinates.X + shiftMapDraw.X, enemy.Coordinates.Y + shiftMapDraw.Y);
                         Console.Write(labyrinth.Map[enemy.Coordinates.Y, enemy.Coordinates.X]);
                     }
 
@@ -101,8 +99,8 @@ namespace labirint
                     Console.WriteLine("Energy: " + player.Energy + "     ");
                     Console.WriteLine("Health: " + player.Health + "%    ");
 
-                    player.Draw(shiftDraw);
-                    enemyManager.Draw(shiftDraw);
+                    player.Draw(shiftMapDraw);
+                    enemyManager.Draw(shiftMapDraw);
                 }
             }
         }

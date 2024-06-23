@@ -47,6 +47,7 @@ namespace labirint
             EntranceDoor = _generator.EntranceDoor;
             ExitDoor = _generator.ExitDoor;
             _coin = _generator.Coin;
+            _map[ExitDoor.Y, ExitDoor.X] = '#'; //убрать выход
         }
 
         public bool ColletCoin(Point coinCoord)
