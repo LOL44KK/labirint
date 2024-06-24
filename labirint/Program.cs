@@ -1,8 +1,4 @@
-﻿using labirint;
-using System;
-using System.Drawing;
-using System.Reflection.Emit;
-using System.Media;
+﻿using System.Drawing;
 
 namespace labirint
 {
@@ -29,6 +25,7 @@ namespace labirint
                 input.AddInput(playerAttacks.Attacks);
 
                 long lastMoveEnemy = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                long lastRespawanEnemy = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 
                 labyrinth.Draw(20, 0);
 
@@ -61,6 +58,24 @@ namespace labirint
                         break;
                     }
 
+                    if (lastRespawanEnemy + 30000 < DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond)
+                    {
+                        int enemyType = new Random().Next(0, 3);
+                        if (enemyType == 0)
+                        {
+                            enemyManager.AddPsychAtDisco();
+                        }
+                        else if (enemyType == 1)
+                        {
+                            enemyManager.AddSafariHunter();
+                        }
+                        else if (enemyType == 2)
+                        {
+                            enemyManager.AddSafariHunter();
+                        }
+                        lastRespawanEnemy = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+                    }
+
                     input.GetInput();
 
                     if (lastMoveEnemy + 300 < DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond)
@@ -68,6 +83,7 @@ namespace labirint
                         lastMoveEnemy = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
                         enemyManager.Move();
                     }
+
 
                     Enemy enemy = enemyManager.CheckCollisionEnemies(shiftMapDraw);
                     if (enemy != null)
@@ -91,9 +107,9 @@ namespace labirint
                     }
 
                     Console.SetCursorPosition(0, 0);
-                    Console.WriteLine("Coin: " + coin);
-                    Console.WriteLine("Coin to win: " + labyrinth.Coin);
-                    Console.WriteLine("Enemy: " + enemyManager.CountEnemy);
+                    Console.WriteLine("Coin: " + coin + "     ");
+                    Console.WriteLine("Coin to win: " + labyrinth.Coin + "  ");
+                    Console.WriteLine("Enemy: " + enemyManager.CountEnemy + "     ");
                     Console.WriteLine();
                     Console.WriteLine("Player stats");
                     Console.WriteLine("Energy: " + player.Energy + "     ");
